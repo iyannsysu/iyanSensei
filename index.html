@@ -1,310 +1,189 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Iyan Sensei - Portfolio</title>
-  <!-- Font + Icon -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Noto+Sans+JP:wght@500;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <style>
-    * {margin:0;padding:0;box-sizing:border-box;}
-    body {
-      font-family:'Poppins',sans-serif;
-      color:#fff;
+    :root{
+      --pink:#ffb6c1;
+      --hot:#ff69b4;
+      --bg-dim:rgba(0,0,0,.65);
+      --intro-time:1.6s;
+    }
+    html{scroll-behavior:smooth;}
+    body{margin:0;font-family:'Poppins',sans-serif;color:#fff;
       background:linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
-                 url('https://raw.githubusercontent.com/iyannsysu/foto-all/refs/heads/main/raiden.gif') no-repeat center center fixed;
-      background-size:cover;
-      overflow-x:hidden;
-    }
+      url('https://raw.githubusercontent.com/iyannsysu/foto-all/refs/heads/main/raiden.gif') no-repeat center center fixed;
+      background-size:cover;overflow-x:hidden;}
 
-    /* Header Intro */
-    header {
-      text-align:center;
-      padding:3rem 1rem 2rem;
-      animation:fadeIn 2s ease-in-out;
-    }
-    .profile-pic {
-      width:130px;
-      height:130px;
-      border-radius:50%;
-      border:4px solid #ffb6c1;
-      box-shadow:0 0 20px rgba(255,182,193,0.8);
-      object-fit:cover;
-      margin-bottom:1rem;
-    }
-    header h1 {
-      font-size:2.5rem;
-      color:#ffb6c1;
-      text-shadow:0 0 15px #ff69b4;
-    }
-    header p {
-      font-size:1.1rem;
-      margin-top:.5rem;
-      color:#ffe4e1;
-    }
+    /* ===== Anime Intro ===== */
+    .anime-intro{position:fixed;inset:0;z-index:99999;background:#000;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .anime-intro::before{content:"";position:absolute;inset:-20%;
+      background:
+        repeating-linear-gradient(100deg, rgba(255,255,255,.15) 0 2px, transparent 2px 10px),
+        repeating-linear-gradient(-70deg, rgba(255,182,193,.18) 0 2px, transparent 2px 12px);
+      animation:lines var(--intro-time) forwards;}
+    @keyframes lines{0%{transform:translateX(-30%);}100%{transform:translateX(30%);}}
+    .burst{position:absolute;width:40vmax;height:40vmax;border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.85) 0 15%, rgba(255,182,193,.7) 30%, rgba(0,0,0,0) 60%);
+      opacity:0;transform:scale(.2);animation:burst var(--intro-time) ease-out forwards;}
+    @keyframes burst{0%{opacity:0;transform:scale(.2);}30%{opacity:1;transform:scale(1);}100%{opacity:0;transform:scale(1.8);}}
+    .intro-title{opacity:0;transform:translateY(10px);animation:titleIn 1.4s forwards;}
+    @keyframes titleIn{to{opacity:1;transform:translateY(0);}}
+    .jp{font-family:'Noto Sans JP',sans-serif;font-size:1rem;color:#ffe4ec;}
+    .en{font-size:1.8rem;color:var(--pink);text-shadow:0 0 10px var(--hot),0 0 22px var(--pink);}
+    .underline{width:0;height:3px;background:linear-gradient(90deg,var(--hot),var(--pink));margin:.6rem auto 0;animation:barIn 1s ease-out forwards .25s;}
+    @keyframes barIn{to{width:180px;}}
+    .anime-intro.hide{animation:introOut .5s forwards;}
+    @keyframes introOut{to{opacity:0;visibility:hidden;}}
+    #app{opacity:0;transition:opacity .6s;}#app.show{opacity:1;}
 
-    /* Filter-style buttons */
-    .tags {
-      display:flex;
-      justify-content:center;
-      gap:1rem;
-      flex-wrap:wrap;
-      margin-top:1.2rem;
-    }
-    .tag {
-      background:rgba(255,182,193,0.15);
-      border:1px solid #ffb6c1;
-      padding:.5rem 1rem;
-      border-radius:25px;
-      font-size:.9rem;
-      font-weight:500;
-      color:#ffb6c1;
-      box-shadow:0 0 10px rgba(255,182,193,0.4);
-      transition:.3s;
-    }
-    .tag:hover {
-      background:#ffb6c1;
-      color:#000;
-      transform:scale(1.08);
-      box-shadow:0 0 15px rgba(255,182,193,0.9);
-    }
+    /* ===== Navbar ===== */
+    nav{position:sticky;top:0;z-index:100;background:rgba(0,0,0,0.7);
+      display:flex;justify-content:center;gap:2rem;padding:1rem 0;box-shadow:0 2px 10px rgba(255,182,193,0.5);}
+    nav a{color:var(--pink);text-decoration:none;font-weight:600;transition:.3s;}
+    nav a:hover{color:#fff;text-shadow:0 0 10px var(--hot);}
+
+    /* ===== Header ===== */
+    header{text-align:center;padding:3rem 1rem 2rem;}
+    .profile-pic{width:130px;height:130px;border-radius:50%;border:4px solid var(--pink);
+      box-shadow:0 0 20px rgba(255,182,193,0.8);object-fit:cover;margin-bottom:1rem;}
+    header h1{font-size:2.5rem;color:var(--pink);text-shadow:0 0 15px var(--hot);}
+    header p{color:#ffe4e1;}
+
+    /* Tags */
+    .tags{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:1.2rem;}
+    .tag{background:rgba(255,182,193,0.15);border:1px solid var(--pink);
+      padding:.5rem 1rem;border-radius:25px;font-size:.9rem;color:var(--pink);transition:.3s;}
+    .tag:hover{background:var(--pink);color:#000;}
 
     /* Sections */
-    section {
-      max-width:900px;
-      margin:2rem auto;
-      padding:2rem;
-      background:rgba(0,0,0,0.65);
-      border-radius:20px;
-      box-shadow:0 0 20px rgba(255,182,193,0.7);
-      transition:.3s;
-      position:relative;
-      z-index:2;
-    }
-    section:hover {transform:translateY(-5px);box-shadow:0 0 30px rgba(255,182,193,0.9);}
-    h2 {
-      color:#ffb6c1;
-      border-bottom:2px solid #ffb6c1;
-      padding-bottom:.5rem;
-      margin-bottom:1rem;
-      font-size:1.8rem;
-      text-shadow:0 0 10px #ff69b4;
-    }
+    section{max-width:900px;margin:2rem auto;padding:2rem;background:var(--bg-dim);border-radius:20px;}
+    h2{color:var(--pink);border-bottom:2px solid var(--pink);padding-bottom:.5rem;margin-bottom:1rem;}
 
-    ul {list-style:none;padding:0;}
-    ul li {padding:.5rem 0;font-size:1.1rem;transition:.2s;}
-    ul li:hover {transform:scale(1.05);color:#ffd6e8;}
+    /* Buttons */
+    .btn{padding:.8rem 1.5rem;border:none;border-radius:50px;
+      background:linear-gradient(45deg,var(--hot),var(--pink));color:#fff;font-weight:600;text-decoration:none;}
+    .btn:hover{background:linear-gradient(45deg,#ff85c1,#ffc4d6);}
 
-    /* Contact Buttons */
-    .contact-links {
-      display:flex;
-      justify-content:center;
-      gap:1.5rem;
-      margin-top:1rem;
-      flex-wrap:wrap;
-    }
-    .btn {
-      padding:.8rem 1.5rem;
-      border:none;
-      border-radius:50px;
-      background:linear-gradient(45deg,#ff69b4,#ffb6c1);
-      color:white;
-      font-size:1rem;
-      font-weight:600;
-      cursor:pointer;
-      text-decoration:none;
-      transition:.3s;
-      box-shadow:0 0 15px rgba(255,182,193,0.6);
-    }
-    .btn:hover {
-      background:linear-gradient(45deg,#ff85c1,#ffc4d6);
-      transform:scale(1.08);
-      box-shadow:0 0 25px rgba(255,182,193,0.9);
-    }
+    /* Social */
+    .social-icons{display:flex;justify-content:center;gap:1.2rem;margin-top:1.5rem;font-size:1.8rem;}
+    .social-icons a{color:var(--pink);} .social-icons a:hover{color:#fff;text-shadow:0 0 10px var(--hot);}
 
-    /* Social Icons */
-    .social-icons {
-      display:flex;
-      justify-content:center;
-      gap:1.2rem;
-      margin-top:1.5rem;
-      font-size:1.8rem;
-    }
-    .social-icons a {color:#ffb6c1;transition:.3s;text-decoration:none;}
-    .social-icons a:hover {color:#fff;text-shadow:0 0 15px #ff69b4;transform:scale(1.2);}
-
-    /* More menu */
-    .more-menu {position:relative;display:inline-block;}
-    .more-btn {font-size:1.8rem;color:#ffb6c1;cursor:pointer;transition:.3s;}
-    .more-btn:hover {color:#fff;text-shadow:0 0 10px #ff69b4;}
-    .dropdown {
-      display:none;
-      position:absolute;
-      top:40px;
-      right:0;
-      background:rgba(0,0,0,0.85);
-      border-radius:10px;
-      padding:.8rem;
-      box-shadow:0 0 15px rgba(255,182,193,0.7);
-      animation:fadeIn .4s ease;
-    }
-    .dropdown a {
-      display:block;
-      color:#ffb6c1;
-      text-decoration:none;
-      padding:.5rem 1rem;
-      font-size:1rem;
-      transition:.3s;
-    }
-    .dropdown a:hover {color:#fff;text-shadow:0 0 10px #ff69b4;}
-
-    footer {
-      text-align:center;
-      padding:1.5rem;
-      background:rgba(0,0,0,0.75);
-      margin-top:2rem;
-      font-size:.9rem;
-      color:#ffc0cb;
-      text-shadow:0 0 8px #ff69b4;
-    }
-
-    /* Badges in footer */
-    .badges {
-      display:flex;
-      justify-content:center;
-      gap:.8rem;
-      margin-top:1rem;
-      flex-wrap:wrap;
-    }
-    .badge {
-      background:linear-gradient(45deg,#ff69b4,#ffb6c1);
-      padding:.4rem .9rem;
-      border-radius:20px;
-      font-size:.8rem;
-      font-weight:600;
-      color:#fff;
-      box-shadow:0 0 10px rgba(255,182,193,0.6);
-      transition:.3s;
-    }
-    .badge:hover {
-      transform:scale(1.1);
-      box-shadow:0 0 15px rgba(255,182,193,0.9);
-    }
+    /* Footer */
+    footer{text-align:center;padding:1.5rem;background:rgba(0,0,0,0.75);margin-top:2rem;}
+    .badges{display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;}
+    .badge{background:linear-gradient(45deg,var(--hot),var(--pink));padding:.4rem .9rem;border-radius:20px;color:#fff;}
 
     /* Sakura */
-    .petal {
-      position:fixed;
-      top:-10%;
-      background:pink;
-      border-radius:50%;
-      opacity:.8;
-      animation:fall 10s linear infinite;
-      pointer-events:none;
-      z-index:1;
-    }
-    @keyframes fall {
-      0%{transform:translateY(0) rotate(0);opacity:1;}
-      100%{transform:translateY(110vh) rotate(360deg);opacity:0;}
-    }
-    @keyframes fadeIn {from{opacity:0;}to{opacity:1;}}
+    .petal{position:fixed;top:-10%;width:15px;height:10px;border-radius:50%;opacity:.85;pointer-events:none;
+      animation:fall linear forwards;z-index:1;}
+    @keyframes fall{to{transform:translateY(110vh) rotate(360deg);}}
+    .petal::before{content:"";position:absolute;inset:0;border-radius:inherit;background:inherit;animation:sway 5s ease-in-out infinite;}
+    @keyframes sway{50%{transform:translateX(30px);} }
+
+    /* Modal */
+    .modal{display:none;position:fixed;z-index:9999;inset:0;padding-top:60px;background:rgba(0,0,0,.9);}
+    .modal-content{margin:auto;display:block;max-width:80%;max-height:80vh;border-radius:10px;box-shadow:0 0 20px var(--pink);}
+    .close{position:absolute;top:20px;right:35px;color:#fff;font-size:40px;cursor:pointer;}
+    .close:hover{color:var(--pink);}
+    #game a{color:var(--pink);text-decoration:none;}#game a:hover{color:#fff;text-shadow:0 0 10px var(--hot);}
+
+    /* Music Button */
+    #musicBtn{position:fixed;bottom:20px;right:20px;background:rgba(0,0,0,.6);border:2px solid var(--pink);
+      border-radius:50%;width:55px;height:55px;color:var(--pink);font-size:22px;cursor:pointer;z-index:10000;}
+    #musicBtn:hover{background:var(--pink);color:#000;}
   </style>
 </head>
 <body>
-  <header>
-    <img src="https://raw.githubusercontent.com/iyannsysu/foto-all/refs/heads/main/68059535c4d911c222b4fd72b12edea0.jpg" alt="Iyan Sensei" class="profile-pic">
-    <h1>Iyan Sensei</h1>
-    <p>"Hidup kadang di bawah, dan di atas jadi anda jangan sombong"</p>
-    <div class="tags">
-      <span class="tag">🌸 Introvert</span>
-      <span class="tag">🎮 Gamer</span>
-      <span class="tag">🎬 Anime Lover</span>
-      <span class="tag">🎶 Music</span>
+  <!-- Intro -->
+  <div class="anime-intro" id="animeIntro">
+    <div class="burst"></div>
+    <div class="intro-title">
+      <div class="jp">イアン先生</div>
+      <div class="en">Iyan Sensei Portfolio</div>
+      <div class="underline"></div>
     </div>
-  </header>
+  </div>
 
-  <section>
-    <h2>✨ Tentang Saya</h2>
-    <p>Halo, aku Iyan. Aku orangnya pendiam dan bisa dibilang introvert.  
-       Jadi jangan lupa sapa duluan ya, soalnya aku nggak terbiasa nyapa duluan.  
-       Hehe ✨</p>
-  </section>
+  <!-- App -->
+  <div id="app">
+    <nav>
+      <a href="#home">Home</a><a href="#about">Tentang</a><a href="#hobi">Hobi</a><a href="#game">Game</a><a href="#kontak">Kontak</a>
+    </nav>
+    <main>
+      <header id="home">
+        <img src="https://raw.githubusercontent.com/iyannsysu/foto-all/refs/heads/main/68059535c4d911c222b4fd72b12edea0.jpg" class="profile-pic">
+        <h1>Iyan Sensei</h1><p>"Kamu bisa pura-pura tidak peduli, tapi hati kecilmu selalu tahu kebenaran."</p>
+        <div class="tags"><span class="tag">🌸 Introvert</span><span class="tag">🎮 Gamer</span><span class="tag">🎬 Anime Lover</span><span class="tag">🎶 Music</span></div>
+      </header>
 
-  <section>
-    <h2>🎨 Hobi</h2>
-    <ul>
-      <li>🎮 Main Game</li>
-      <li>🎬 Nonton Anime</li>
-      <li>🎶 Dengar Musik</li>
-    </ul>
-  </section>
+      <section id="about"><h2>✨ Tentang Saya</h2><p>Halo, aku Iyan. Aku orangnya pendiam dan introvert. Jadi jangan lupa sapa duluan ya ✨</p></section>
 
-  <section>
-    <h2>🔥 Game yang Dikuasai</h2>
-    <ul>
-      <li>Mobile Legends</li>
-      <li>Minecraft</li>
-      <li>Genshin Impact</li>
-    </ul>
-    <p>Sebenarnya pengen banget main game Triple A,  
-       tapi karena belum punya PC, jadi fokus di game Android dulu 🎮.</p>
-  </section>
+      <section id="hobi"><h2>🎨 Hobi</h2><ul><li>🎮 Main Game</li><li>🎬 Nonton Anime</li><li>🎶 Dengar Musik</li></ul></section>
 
-  <section>
-    <h2>📩 Kontak</h2>
-    <p>Kalo mau kenalan atau ngobrol, bisa hubungi aku lewat:</p>
-    <div class="contact-links">
-      <a href="mailto: satriyan27@gmail.com" class="btn">📧 Email</a>
-      <a href="https://wa.me/6281234567890" target="_blank" class="btn">💬 WhatsApp</a>
-    </div>
+      <section id="game">
+        <h2>🔥 Game yang Dikuasai</h2>
+        <ul>
+          <li><a href="#" onclick="openModal('https://raw.githubusercontent.com/iyannsysu/foto-all/refs/heads/main/Screenshot_2025-09-11-07-54-05-371_com.mobile.legends.jpg')">Mobile Legends</a></li>
+          <li><a href="#" onclick="openModal('https://raw.githubusercontent.com/iyannsysu/foto-all/refs/heads/main/Screenshot_2025-09-06-21-10-30-324_com.mojang.minecraftpe.jpg')">Minecraft</a></li>
+          <li><a href="#" onclick="openModal('https://i.ibb.co/sVYwJ5B/genshin.jpg')">Genshin Impact</a></li>
+        </ul>
+        <p>Pengen main game Triple A, tapi karena belum punya PC, jadi fokus di Android 🎮</p>
+      </section>
 
-    <!-- Social Media -->
-    <div class="social-icons">
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-discord"></i></a>
-      <a href="#"><i class="fab fa-youtube"></i></a>
-      <div class="more-menu">
-        <span class="more-btn"><i class="fas fa-ellipsis-v"></i></span>
-        <div class="dropdown">
-          <a href="#"><i class="fab fa-twitter"></i> Twitter/X</a>
-          <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
-          <a href="#"><i class="fab fa-facebook"></i> Facebook</a>
+      <section id="kontak">
+        <h2>📩 Kontak</h2>
+        <div class="contact-links">
+          <a href="mailto:satriyan27@gmail.com" class="btn">📧 Email</a>
+          <a href="https://wa.me/6281234567890" target="_blank" class="btn">💬 WhatsApp</a>
         </div>
-      </div>
-    </div>
-  </section>
+        <div class="social-icons">
+          <a href="https://www.instagram.com/satriyanei?igsh=MXp0c3podnJoZ3Z5" target="_blank"><i class="fab fa-instagram"></i></a>
+          <a href="https://discord.gg/K2K8Gw7mzQ" target="_blank"><i class="fab fa-discord"></i></a>
+          <a href="https://www.facebook.com/asuna.iyan" target="_blank"><i class="fab fa-facebook"></i></a>
+        </div>
+      </section>
 
-  <footer>
-    <p>♥️Dibuat oleh iyan♥️</p>
-    <div class="badges">
-      <span class="badge">💖 Waifu: Asuna</span>
-      <span class="badge">🎮 Gamer Mobile</span>
-      <span class="badge">🌸 Anime Enthusiast</span>
-      <span class="badge">🎶 Music Vibes</span>
-    </div>
-  </footer>
+      <footer>
+        <p>🌸 Dibuat dengan cinta dan sakura vibes oleh Iyan Sensei 🌸</p>
+        <div class="badges"><span class="badge">💖 Waifu: Asuna</span><span class="badge">🎮 Gamer Mobile</span><span class="badge">🌸 Anime Enthusiast</span><span class="badge">🎶 Music Vibes</span></div>
+      </footer>
+    </main>
+  </div>
 
-  <!-- Sakura petals -->
+  <!-- Modal -->
+  <div id="imgModal" class="modal"><span class="close" onclick="closeModal()">&times;</span><img class="modal-content" id="modalImage"></div>
+
+  <!-- Backsound -->
+  <audio id="bgMusic" loop>
+    <source src="Hinda_music.mp3" type="audio/mpeg">
+  </audio>
+  <button id="musicBtn"><i class="fas fa-volume-mute"></i></button>
+
   <script>
-    function createPetal(){
-      const petal=document.createElement('div');
-      petal.classList.add('petal');
-      const size=Math.random()*10+10+'px';
-      petal.style.width=size;
-      petal.style.height=size;
-      petal.style.left=Math.random()*100+'vw';
-      petal.style.background='rgba(255,182,193,0.9)';
-      petal.style.animationDuration=Math.random()*5+5+'s';
-      document.body.appendChild(petal);
-      setTimeout(()=>petal.remove(),10000);
-    }
+    // Intro
+    const intro=document.getElementById('animeIntro');const app=document.getElementById('app');
+    setTimeout(()=>{intro.classList.add('hide');app.classList.add('show');setTimeout(()=>intro.remove(),600);},1600);
+
+    // Sakura
+    function createPetal(){const petal=document.createElement('div');petal.classList.add('petal');petal.style.left=Math.random()*100+'vw';
+      const size=Math.random()*10+10;petal.style.width=size+'px';petal.style.height=(size*0.6)+'px';
+      petal.style.animationDuration=(Math.random()*5+5)+'s';const colors=['#ffc0cb','#ffb6c1','#ff69b4','#ff99cc'];petal.style.background=colors[Math.floor(Math.random()*colors.length)];
+      document.body.appendChild(petal);setTimeout(()=>petal.remove(),10000);}
     setInterval(createPetal,300);
 
-    // Toggle menu ⋮
-    const moreBtn=document.querySelector('.more-btn');
-    const dropdown=document.querySelector('.dropdown');
-    moreBtn.addEventListener('click',()=>{dropdown.style.display=dropdown.style.display==='block'?'none':'block';});
-    window.addEventListener('click',(e)=>{if(!e.target.closest('.more-menu')){dropdown.style.display='none';}});
+    // Modal
+    function openModal(src){document.getElementById("imgModal").style.display="block";document.getElementById("modalImage").src=src;}
+    function closeModal(){document.getElementById("imgModal").style.display="none";}
+    window.onclick=function(e){if(e.target===document.getElementById("imgModal")) closeModal();}
+
+    // Music toggle
+    const music=document.getElementById("bgMusic");const btn=document.getElementById("musicBtn");let isPlaying=false;
+    btn.addEventListener("click",()=>{if(isPlaying){music.pause();btn.innerHTML='<i class="fas fa-volume-mute"></i>';}else{music.play();btn.innerHTML='<i class="fas fa-volume-up"></i>';}isPlaying=!isPlaying;});
   </script>
 </body>
 </html>
