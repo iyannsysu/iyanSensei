@@ -1,7 +1,7 @@
 <h1 align="center">🚀 iyan</h1>
 
 <p align="center">
-  Deskripsi singkat project kamu — satu kalimat yang bikin orang langsung paham & tertarik.
+  Project gabut keren.
 </p>
 
 <p align="center">
@@ -13,10 +13,8 @@
 ---
 
 ## ✨ Fitur Utama
-- 🔥 Fitur pertama yang keren
-- ⚡ Fitur kedua yang berguna
-- 🧠 Fitur ketiga yang pintar
-
+- 🔥 Fitur intro
+- ⚡ Fitur GG
 ---
 
 ## 🛠️ Tech Stack
