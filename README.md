@@ -1,4 +1,4 @@
-<h1 align="center">🚀 Nama Project</h1>
+<h1 align="center">🚀 iyan</h1>
 
 <p align="center">
   Deskripsi singkat project kamu — satu kalimat yang bikin orang langsung paham & tertarik.
